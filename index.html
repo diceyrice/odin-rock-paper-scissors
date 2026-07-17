@@ -6,94 +6,113 @@
     <title>Document</title>
 </head>
 <body>
+    <button>Rock</button>
+    <button>Paper</button>
+    <button>Scissors</button>
+
+    <div>Choose rock, paper, or scissors!</div>
+
     <script>
-        console.log("Hello World")
+        console.log("Hello World");
+
+        let humanSelection = "";
+        const score = document.querySelector("div");
+        
+        let humanScore = 0;
+        let computerScore = 0;
 
         function getComputerChoice() {
-            choice = Math.random()*3
+            choice = Math.random()*3;
             if(choice < 1) {
-                return "rock"
+                return "Rock";
             }
             else if(choice < 2) {
-                return "paper"
+                return "Paper";
             }
             else {
-                return "scissors"
+                return "Scissors";
             }
         }
 
-        console.log(getComputerChoice())
+        console.log(getComputerChoice());
 
-        function getHumanChoice() {
-            return prompt("Choose rock, paper, or scissors!").toLowerCase()
-        }
-        console.log("Hello World")
+        const buttons = document.querySelectorAll("button");
 
         function playGame() {
-            let humanScore = 0
-            let computerScore = 0
-            
             function playRound(humanChoice, computerChoice) {
-                if(humanChoice=="rock") {
-                    if(computerChoice=="paper") {
-                        console.log("You lose! Paper beats Rock.")
+                if(humanChoice=="Rock") {
+                    if(computerChoice=="Paper") {
                         computerScore++
+                        score.textContent = `You lose! Paper beats Rock. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
-                    else if(computerChoice=="scissors") {
-                        console.log("You win! Rock beats Scissors.")
+                    else if(computerChoice=="Scissors") {
                         humanScore++
+                        score.textContent = `You win! Rock beats Scissors. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                     else {
-                        console.log("It's a tie!")
+                        score.textContent = `It's a tie! You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                 }
 
-                if(humanChoice=="paper") {
-                    if(computerChoice=="scissors") {
-                        console.log("You lose! Scissors beats Paper.")
+                if(humanChoice=="Paper") {
+                    if(computerChoice=="Scissors") {
                         computerScore++
+                        score.textContent = `You lose! Scossors beats Paper. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
-                    else if(computerChoice=="rock") {
-                        console.log("You win! Paper beats Rock.")
+                    else if(computerChoice=="Rock") {
                         humanScore++
+                        score.textContent = `You win! Paper beats Rock. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                     else {
-                        console.log("It's a tie!")
+                        score.textContent = `It's a tie! You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                 }
 
-                if(humanChoice=="scissors") {
-                    if(computerChoice=="rock") {
-                        console.log("You lose! Rock beats Scissors.")
+                if(humanChoice=="Scissors") {
+                    if(computerChoice=="Rock") {
                         computerScore++
+                        score.textContent = `You lose! Rock beats Scissors. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
-                    else if(computerChoice=="paper") {
-                        console.log("You win! Scissors beats Paper.")
+                    else if(computerChoice=="Paper") {
                         humanScore++
+                        score.textContent = `You win! Scissors beats Paper. You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                     else {
-                        console.log("It's a tie!")
+                        score.textContent = `It's a tie! You: ${humanScore}. Computer: ${computerScore}.`;
                     }
                 }
             }
 
-            for(let i=0;i<5;i++) {
-                const humanSelection = getHumanChoice()
-                const computerSelection = getComputerChoice()
+            let computerSelection = getComputerChoice()
 
-                playRound(humanSelection, computerSelection)
-            }
+            playRound(humanSelection, computerSelection)
 
-            console.log("Final Score: Human: " + humanScore + " Computer: " + computerScore)
-            if(humanScore > computerScore) {
-                console.log("Human wins!")
-            }
-            else {
-                console.log("Computer wins!")
+            if(humanScore>=5||computerScore>=5) {score.textContent = `Final score: You: ${humanScore}. Computer: ${computerScore}.`;
+                if(humanScore > computerScore) {
+                    score.append(" You win!")
+                }
+                else {
+                    score.append(" Computer wins!")
+                }
+                
+                for(let i = 0;i < buttons.length; i++) {
+                    buttons[i].remove();
+                }
+
+                const body = document.querySelector("body");
+                const resetBtn = document.createElement("button");
+                resetBtn.textContent = "Reset";
+                body.appendChild(resetBtn);
+                resetBtn.addEventListener('click', () => window.location.reload());
             }
         }
 
-        playGame()
+        for(let i = 0;i < buttons.length; i++) {
+            buttons[i].addEventListener('click', (event) => {
+                humanSelection = event.target.textContent
+                playGame();
+            });
+        }
     </script>
 </body>
 </html>
