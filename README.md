@@ -1,4 +1,4 @@
-# odin-rock-paper-scissors
+# rock-paper-scissors
 A basic game of rock-paper-scissors using HTML, CSS, and JS.
 
 ## Features
